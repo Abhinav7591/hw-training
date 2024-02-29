@@ -1,0 +1,10 @@
+Gave browser inspect related task and found the following things from it
+(URL -  https://www.flipkart.com/mens-footwear/sports-shoes/pr?sid=osp,cil,1cu&otracker=categorytree)
+    Data loading ajax URL
+    Request Headers
+    Response Headers
+    Response cookies
+    Request method type
+    Response status code
+    Inspect and find the category name
+Then read documentation about HTTP
