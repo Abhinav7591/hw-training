@@ -1,0 +1,2 @@
+_id,emp_name,emp_id,login_time,logout_time,tasks[0].task_title,tasks[0].task_description,tasks[0].start_time,tasks[0].end_time,tasks[0].task_success
+65e94c6cb71d62904197ce75,Aravind,3421,2024-03-07T10:41:08.459Z,2024-03-07T10:41:08.459Z,Task 1,completed the pending task,2024-03-07 10:41,2024-03-08 19:40,true
