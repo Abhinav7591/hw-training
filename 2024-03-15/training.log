@@ -1,0 +1,49 @@
+Meeting was conducted discuss about xpath
+and improve xpath Quality
+url = 'https://www.bayut.com/property/details-8724106.html'
+
+reference no = response.xpath("//li[span[contains(text() ,'Reference no.')]]/span[2]/text()").get()
+               'Bayut - Mohsin 1bhk 413'
+
+price = response.xpath("//div[@aria-label ='Property basic info']//span[@aria-label ='Price']/text()").get()
+        '73,000'
+
+currency = response.xpath("//div[@aria-label ='Property basic info']//span[@aria-label ='Currency']/text()").get()
+          'AED'
+
+Location = response.xpath("//div[@aria-label='Property header']/text()").get()
+          'Park Terrace, Arjan, Dubai'
+
+purpose = response.xpath("//li[span[contains(text() ,'Purpose')]]/span[2]/text()").get()
+          'For Rent'
+
+Type = response.xpath("//li[span[contains(text() ,'Type')]]/span[2]/text()").get()
+        'Apartment'
+
+Furnishing = response.xpath("//li[span[contains(text() ,'Furnishing')]]/span[2]/text()").get()
+        'Unfurnished'
+
+Added on = response.xpath("//li[span[contains(text() ,'Added on')]]/span[2]/text()").get()
+        '10 March 2024'
+
+bedrooms = response.xpath("//div[contains(@class, 'ba1ca68e')]/span[@aria-label='Beds']/span/text()").get()
+        '1 Bed'
+
+bathrooms = response.xpath("//div[contains(@class, 'ba1ca68e')]/span[@aria-label='Baths']/span/text()").get()
+        '2 Baths'
+
+Area = response.xpath("//div[contains(@class, 'ba1ca68e')]/span[@aria-label='Area']//span/text()").get()
+        '752 sqft'
+
+Agent name = response.xpath("//a[@aria-label ='Agent name']/text()").get()
+        'Mohsin Raza'
+
+image_url = response.xpath("//picture/img[@aria-label='Cover Photo']/@src").get()
+        'https://images.bayut.com/thumbnails/638837906-800x600.jpeg'
+
+breadcrumbs = response.xpath('//div[@aria-label="Breadcrumb"]//a//text()').getall()
+        ['Dubai Apartments', 'Arjan', 'Park Terrace']
+
+amenities = response.xpath("//div[@aria-label='Dialog']//span/text()").getall()
+
+description = response.xpath("//div[@aria-label='Property description']//span/text()").getall()
