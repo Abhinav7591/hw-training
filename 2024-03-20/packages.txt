@@ -1,0 +1,397 @@
+import csv
+
+#wirterow
+
+# writing from a CSV file
+
+with open('data.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(['Name', 'Age', 'Country'])
+    writer.writerow(['Abhinav', 22, 'India'])
+    writer.writerow(['Alan', 25, 'Canada'])
+
+# Reading from a CSV file
+    
+with open('data.csv', newline='') as csvfile:
+    reader = csv.reader(csvfile)
+    for row in reader:
+        print(row)
+
+
+#using writerows
+        
+data = [
+    ['name', 'age', 'country'],
+    ['abhinav', 23, 'india'],
+    ['amay', 34, 'USA']
+]
+
+with open('data.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerows(data)
+with open('data.csv', newline='') as csvfile:
+    reader = csv.reader(csvfile)
+    for row in reader:
+        print(row)
+
+
+
+#delimiter
+with open('data.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile, delimiter=':')
+    writer.writerows(data)
+
+#quoting
+with open('data.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile, quoting=csv.QUOTE_NONE)
+    writer.writerows(data)
+
+
+
+from pymongo import MongoClient
+import datetime
+import pprint
+
+# Connect to MongoDB
+client = MongoClient()
+client = MongoClient("localhost", 27017)
+
+# Select or create a database
+db = client["test-database"]
+
+# Select or create a collection
+collection = db["test-collection"]
+
+# Create a document
+post = {
+    "author": "Abhinav",
+    "text": "My first blog post!",
+    "tags": ["mongodb", "python", "pymongo"],
+    "date": datetime.datetime.now(),
+}
+
+# Insert the document into the collection
+post_id = collection.insert_one(post).inserted_id
+
+print(post_id)
+
+
+# Find and print the first document in the collection
+pprint.pprint(collection.find_one())
+
+
+
+#insertmany()
+
+new_posts = [
+    {
+        "author": "Mike",
+        "text": "Another post!",
+        "tags": ["bulk", "insert"],
+        "date": datetime.datetime(2009, 11, 12, 11, 14),
+    },
+
+    {
+
+        "author": "Eliot",
+        "title": "MongoDB is fun",
+        "text": "and pretty easy too!",
+        "date": datetime.datetime(2009, 11, 10, 10, 45),
+
+    },
+]
+
+result = collection.insert_many(new_posts)
+result.inserted_ids
+
+
+
+import js2py
+
+#  JavaScript function
+js_code = '''
+function add(a, b) {
+    return a + b;
+}
+'''
+
+# Execute JavaScript code
+js_context = js2py.EvalJs()
+js_context.execute(js_code)
+
+# Call JavaScript function from Python
+result = js_context.add(2, 3)
+print("Result:", result)  # Output: 5
+
+
+
+# Create an EvalJs object
+js_context = js2py.EvalJs()
+
+# Execute JavaScript code
+js_context.execute('var obj = {name: "John", age: 30}; var arr = [1, 2, 3];')
+
+print("Name:", js_context.obj.name)  
+print("Age:", js_context.obj.age)   
+print("First element of array:", js_context.arr[0]) 
+
+
+
+import cloudscraper
+
+scraper = cloudscraper.create_scraper()# URL of the webpage you want to scrape
+
+url = 'https://example.com'# Make a GET request to the webpage
+
+response = scraper.get(url)# Check if the request was successful
+if response.status_code == 200:
+
+    # Print the content of the webpage
+    print(response.text)
+else:
+    print("Failed to fetch the webpage:", response.status_code)
+
+
+from ftplib import FTP
+
+# Connect to the FTP server
+ftp = FTP('ftp.example.com')
+ftp.login(user='anonymous', passwd='anonymous@example.com')
+
+# List files in the root directory
+files = ftp.nlst()
+for file in files:
+    print(file)
+
+# Close the connection
+ftp.quit()
+
+
+
+import random
+
+
+random_float = random.random()        # Generate a random float number between 0 and 1
+print("Random float:", random_float)
+
+
+random_int = random.randint(1, 100)    # Generate a random integer between 1 and 100
+print("Random integer:", random_int)
+
+my_list = [1, 2, 3, 4, 5]
+random_element = random.choice(my_list)     # Select a random element from a list
+print("Random element:", random_element)
+
+# Shuffle a list
+random.shuffle(my_list)
+print("Shuffled list:", my_list)
+
+
+
+import os
+
+# Get information about the current operating system
+print("Operating system:", os.name)
+
+# Get the current working directory
+cwd = os.getcwd()
+print("Current working directory:", cwd)
+
+# Get the effective group id of the current process
+gid = os.getegid()
+print("Effective group id:", gid)
+
+# Get the effective user id of the current process
+uid = os.geteuid()
+print("Effective user id:", uid)
+
+# Get the list of environment variables
+env_vars = os.environ
+print("Environment variables:")
+for var, val in env_vars.items():
+    print(f"{var}: {val}")
+
+# Get information about the system platform
+platform = os.uname()
+print("System platform information:", platform)
+
+# Get the system hostname
+hostname = os.uname().nodename
+print("Hostname:", hostname)
+
+
+import dropbox
+import os
+
+# Get your Dropbox access token from https://www.dropbox.com/developers/apps
+ACCESS_TOKEN = 'your_access_token'
+
+# Initialize Dropbox client
+dbx = dropbox.Dropbox(ACCESS_TOKEN)
+
+# Specify the local file path and Dropbox path
+local_file_path = '/path/to/local/file.txt'
+dropbox_file_path = '/file.txt'  # Path where you want to upload the file on Dropbox
+
+# Check if the local file exists
+if os.path.exists(local_file_path):
+    # Open the local file in read mode
+    with open(local_file_path, 'rb') as f:
+        # Upload the file to Dropbox
+        dbx.files_upload(f.read(), dropbox_file_path, mode=dropbox.files.WriteMode.overwrite)
+    print("File uploaded successfully to Dropbox.")
+else:
+    print("Local file not found.")
+
+
+
+import base64
+
+# Encode binary data using Base64
+binary_data = b'Hello, world!'
+encoded_data = base64.b64encode(binary_data)
+print("Encoded data:", encoded_data)
+
+# Decode Base64-encoded data
+decoded_data = base64.b64decode(encoded_data)
+print("Decoded data:", decoded_data.decode('utf-8'))
+
+
+
+
+from lxml import etree
+# Parse an XML document
+xml_str = '<root><child>Hello, world!</child></root>'
+root = etree.fromstring(xml_str)
+child_text = root.xpath('//child/text()')
+print(child_text)
+
+
+
+import xml.etree.ElementTree as ET
+
+# Parse an XML document
+xml_str = '<root><child>Hello, world!</child></root>'
+root = ET.fromstring(xml_str)
+
+# Access elements and attributes
+child_element = root.find('child')
+print("Text content of <child> element:", child_element.text)
+
+
+
+
+import time
+
+# Get the current time
+current_time = time.time()
+print("Current time:", current_time)
+
+# Convert current time to a time tuple representing UTC time
+utc_time_tuple = time.gmtime(current_time)
+print("UTC time tuple:", utc_time_tuple)
+
+# Format the UTC time tuple as a string
+formatted_utc_time = time.strftime("%Y-%m-%d %H:%M:%S", utc_time_tuple)
+print("Formatted UTC time:", formatted_utc_time)
+
+
+start_time = time.time()
+
+# Perform some time-consuming operation
+for _ in range(1000000):
+    pass
+
+end_time = time.time()
+execution_time = end_time - start_time
+
+print("Execution time:", execution_time, "seconds")
+
+
+
+import urllib.request
+from lxml import etree
+
+# Open a URL and read its contents
+with urllib.request.urlopen('https://www.example.com') as response:
+    html = response.read()
+
+root = etree.HTML(html)
+
+title_elements = root.xpath('//title')
+
+if title_elements:
+    print("Title:", title_elements[0].text)
+
+
+
+import datetime
+
+current_datetime = datetime.datetime.now()
+print("Current datetime:", current_datetime)
+
+# Create a specific datetime object
+specific_datetime = datetime.datetime(2023, 4, 15, 12, 30, 0)
+print("Specific datetime:", specific_datetime)
+
+# Get the current date
+current_date = datetime.date.today()
+print("Current date:", current_date)
+
+# Create a specific date object
+specific_date = datetime.date(2023, 4, 15)
+print("Specific date:", specific_date)
+
+# Calculate the difference between two datetime objects
+
+time_difference = specific_datetime - current_datetime
+print("Time difference:", time_difference)
+
+# Format a datetime object as a string
+
+formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+print("Formatted datetime:", formatted_datetime)
+
+
+
+
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
+
+logger = logging.getLogger('example')
+
+logger.debug('This is a debug message')
+logger.info('This is an info message')
+logger.warning('This is a warning message')
+logger.error('This is an error message')
+logger.critical('This is a critical message')
+
+
+
+import ast
+
+# Python code as a string
+python_code = """
+def add(a, b):
+    return a + b
+"""
+
+parsed_ast = ast.parse(python_code)
+
+# Define a custom NodeTransformer to modify the AST
+class MyTransformer(ast.NodeTransformer):
+    def visit_FunctionDef(self, node):
+        # Modify the function name
+        node.name = 'sum'
+        return node
+
+# Apply the custom transformer to the AST
+transformed_ast = MyTransformer().visit(parsed_ast)
+
+# Generate Python code from the modified AST
+modified_code = ast.unparse(transformed_ast)
+
+print(modified_code)
