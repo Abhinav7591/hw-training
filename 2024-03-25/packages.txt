@@ -1,0 +1,151 @@
+import requests
+
+def fetch_website_content(url):
+    try:
+        response = requests.get(url, verify=False)
+        if response.status_code == 200:
+            print("Content retrieved successfully:")
+            print(response.text)
+        else:
+            print(f"Failed to fetch content. Status code: {response.status_code}")
+    
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching content: {e}")
+
+if __name__ == "__main__":
+    website_url = "https://www.bayut.com/to-rent/property/dubai/"
+    
+    # Fetch content from the website with SSL certificate verification disabled
+    fetch_website_content(website_url)
+
+
+
+import pymongo
+
+client = pymongo.MongoClient("mongodb://localhost:27017/")
+db = client["Abhi_database"]
+users_collection = db["users"]
+
+user_data = [
+    {"name": "Alice", "email": "alice@example.com", "age": 30, "city": "New York"},
+    {"name": "Bob", "email": "bob@example.com", "age": 25, "city": "Los Angeles"},
+    {"name": "Charlie", "email": "charlie@example.com", "age": 35, "city": "Chicago"}
+]
+users_collection.insert_many(user_data)
+users_collection.create_index([('email', pymongo.ASCENDING)])
+
+query_email = "alice@example.com"
+result = users_collection.find_one({"email": query_email})
+
+print("User found with email:", query_email)
+print(result)
+
+
+indexes = users_collection.list_indexes()
+for index in indexes:
+    print(index)
+
+
+data = [
+    ['name', 'age', 'country'],
+    ['abhinav', 23, 'india'],
+    ['amay', 34, 'USA']
+]
+
+with open('data.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerows(data)
+with open('data.csv', newline='') as csvfile:
+    reader = csv.reader(csvfile)
+    for row in reader:
+        print(row)
+
+
+
+#delimiter
+with open('data.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile, delimiter=':')
+    writer.writerows(data)
+
+#quoting
+with open('data.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile, quoting=csv.QUOTE_NONE)
+    writer.writerows(data)
+
+
+
+import json
+x =  '{ "name":"John", "age":30, "city":"New York"}'
+y = json.loads(x)
+print(y["age"]) 
+
+import json
+
+x = {
+  "name": "abhi",
+  "age": 22,
+  "married": False,
+  "divorced": False,
+  "pets": None,
+  "cars": [
+    {"model": "BMW 230", "mpg":32},
+    {"model": "Ford Edge", "mpg": 65}
+  ]
+
+}
+
+print(json.dumps(x))
+
+
+
+import csv
+
+with open('data.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(['Name', 'Age', 'Country'])
+    writer.writerow(['Abhinav', 22, 'India'])
+    writer.writerow(['Alan', 25, 'Canada'])
+    
+with open('data.csv', newline='') as csvfile:
+    reader = csv.reader(csvfile)
+    for row in reader:
+        print(row)
+
+
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+
+driver = webdriver.Chrome() 
+driver.get("https://www.bayut.com/to-rent/property/dubai/")
+assert "Python" in driver.title
+elem = driver.find_element(By.NAME, "q")
+elem.clear()
+elem.send_keys("pycon")
+elem.send_keys(Keys.RETURN)
+assert "No results found." not in driver.page_source
+driver.close()
+
+
+import unittest
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+
+class BayutPropertySearch(unittest.TestCase):
+
+    def setUp(self):
+        self.driver = webdriver.Chrome()
+
+    def test_search_in_bayut(self):
+        driver = self.driver
+        driver.get("https://www.bayut.com/to-rent/property/dubai/")
+        self.assertIn("Bayut", driver.title)  # Update assertion to check for "Bayut"
+        # You can add more assertions or actions here if needed
+
+    def tearDown(self):
+        self.driver.close()
+
+if __name__ == "__main__":
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)
