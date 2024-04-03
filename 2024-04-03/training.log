@@ -1,0 +1,6 @@
+completed the previous crawler and parser task 
+ - add logging in parser for failed data
+ - fix the RecursionError from crawler code
+total 37k data scraped from 'https://www.bayut.com/to-rent/property/dubai/'
+
+then try about re,xpath
