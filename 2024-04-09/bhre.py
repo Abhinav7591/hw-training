@@ -99,6 +99,7 @@ class BHGREAgentScraper:
                                         if agent_details_data:
                                             agent_details = self.extract_agent_details(agent_details_data)
                                             self.save_agent_details_to_db(agent_details)
+                                page_number += 1
                             else:
                                 logger.warning(f"No agents found for {sub_url} on page {page_number}")
                                 break
